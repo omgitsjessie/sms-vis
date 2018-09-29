@@ -1,6 +1,9 @@
 #import sms data
 #android sms to text app to create a file
 library(dplyr) #for pipe
+library(tm) #text mining
+library(wordcloud) #for fun :)
+
 
 sms_20180928 <- read.delim("~/Downloads/sms_20180928.txt", header=F)
 
@@ -15,17 +18,12 @@ sms_20180928$Message <- as.character(sms_20180928$Message)
 sms_20180928$timestamp <- paste(sms_20180928$Date, sms_20180928$Time) %>% as.POSIXct(format="%Y-%m-%d %H:%M:%S")
 
 #replace in/out with whoever sent the text
-sms_20180928$Person <- ifelse(sms_20180928$Sender == "in", "Josh", "Jessie")
+sms_20180928$Person <- ifelse(sms_20180928$Sender == "in", "Him", "Her")
 
-#col to grab number of characters
+#col to grab number of characters per sms
 sms_20180928$char <- nchar(sms_20180928$Message)
-
-
-#count words
+#count words per sms
 sms_20180928$wordcount <- sapply(gregexpr("[[:alpha:]]+", sms_20180928$Message), function(x) sum(x > 0))
-
-
-
 
 ###### nabbing some easy stats rq
 

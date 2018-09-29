@@ -3,7 +3,7 @@
 library(dplyr) #for pipe
 library(tm) #text mining
 library(wordcloud) #for fun :)
-
+library(SnowballC)
 
 sms_20180928 <- read.delim("~/Downloads/sms_20180928.txt", header=F)
 
@@ -25,6 +25,19 @@ sms_20180928$char <- nchar(sms_20180928$Message)
 #count words per sms
 sms_20180928$wordcount <- sapply(gregexpr("[[:alpha:]]+", sms_20180928$Message), function(x) sum(x > 0))
 
+
+#establish corpus/term matrix
+smsCorpus <- sms_20180928$Message %>% VectorSource() %>% Corpus()
+
+#Clean data
+smsCorpus <- smsCorpus %>% tm_map(content_transformer(tolower)) #lowercase
+smsCorpus <- smsCorpus %>% tm_map(removeWords, stopwords("english")) #remove stopwords
+#smsCorpus <- smsCorpus %>% tm_map(stemDocument) #stemming
+
+#documentTermMatrix
+dtm <- smsCorpus %>% DocumentTermMatrix()
+inspect(dtm)
+findFreqTerms(dtm,10)
 ###### nabbing some easy stats rq
 
 #quick test, who has longer texts?

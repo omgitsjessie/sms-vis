@@ -2,8 +2,6 @@
 #android sms to text app to create a file
 library(dplyr) #for pipe
 library(tm) #text mining
-library(wordcloud) #for fun :)
-library(SnowballC)
 
 sms_20180928 <- read.delim("~/Downloads/sms_20180928.txt", header=F)
 

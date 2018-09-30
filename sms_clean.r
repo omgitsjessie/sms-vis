@@ -2,6 +2,7 @@
 #android sms to text app to create a file
 library(dplyr) #for pipe
 library(tm) #text mining
+library(lubridate) #date handling
 
 sms_20180928 <- read.delim("~/Downloads/sms_20180928.txt", header=F)
 
@@ -18,7 +19,8 @@ sms_20180928$timestamp <- paste(sms_20180928$Date, sms_20180928$Time) %>% as.POS
 sms_20180928$day <- sms_20180928$Date %>% as.Date() %>% weekdays() %>% as.factor()
 #Reorder factor levels for mon-sun instead of alpha order
 sms_20180928$day <- factor(sms_20180928$day, levels(sms_20180928$day)[c(4,2,6,7,5,1,3)])
-
+#add hour to bin text patterns
+sms_20180928$hour <- hour(sms_20180928$timestamp)
 
 #replace in/out with whoever sent the text
 sms_20180928$Person <- ifelse(sms_20180928$Sender == "in", "Him", "Her")

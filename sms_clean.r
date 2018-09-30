@@ -14,6 +14,11 @@ sms_20180928$Message <- as.character(sms_20180928$Message)
 
 #local timestamp for each message using date and time
 sms_20180928$timestamp <- paste(sms_20180928$Date, sms_20180928$Time) %>% as.POSIXct(format="%Y-%m-%d %H:%M:%S")
+#add categorical day of week category to bin text patterns
+sms_20180928$day <- sms_20180928$Date %>% as.Date() %>% weekdays() %>% as.factor()
+#Reorder factor levels for mon-sun instead of alpha order
+sms_20180928$day <- factor(sms_20180928$day, levels(sms_20180928$day)[c(4,2,6,7,5,1,3)])
+
 
 #replace in/out with whoever sent the text
 sms_20180928$Person <- ifelse(sms_20180928$Sender == "in", "Him", "Her")

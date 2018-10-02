@@ -41,8 +41,14 @@ smsCorpus <- smsCorpus %>% tm_map(removeWords, stopwords("english")) #remove sto
 
 #documentTermMatrix
 dtm <- smsCorpus %>% DocumentTermMatrix()
+tdm <- smsCorpus %>% TermDocumentMatrix()
 inspect(dtm)
 findFreqTerms(dtm,10)
+#Breaking out tdm terms for maximum wordcloud fun
+m <- as.matrix(tdm)
+v <- sort(rowSums(m),decreasing=T)
+d <- data.frame(word=names(v), freq=v)
+
 ###### nabbing some easy stats rq
 
 #quick test, who has longer texts?

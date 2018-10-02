@@ -11,10 +11,11 @@ ggplot(data=sms_20180928, aes(x=hour, fill=Person)) +
   geom_bar(stat="count", position=position_dodge()) + 
   xlab("Hour of Day") + ylab("Num Texts Sent") + 
   ggtitle("Texts sent, by person and hour of day")
-
+#wordcloud, because why not
+wordcloud(smsCorpus) #more random placement, using corpus
+wordcloud(d$word,d$freq,c(3,.4),4,random.order=FALSE) #most freq words (4+ freq) plotted first
 
 #TODO scatterplot of words most likely to be said by him/her
-#TODO wordclouds (us, him, her)
 #TODO timeseries for frequency trend by day of week /  time of day
 #TODO distribution of text lengths
 #TODO who texts first in a day? last?

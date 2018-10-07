@@ -1,5 +1,6 @@
 library(ggplot2)
 library(dplyr)
+library(wordcloud)
 
 #bar chart over day of week, who texts the most?
 ggplot(data = sms_20180928, aes(x=day, fill=Person)) + 
